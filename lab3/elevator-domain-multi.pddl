@@ -1,4 +1,4 @@
-(define (domain miconic)
+(define (domain task1)
   (:requirements :adl :typing)
   (:types passenger - object
           floor - object
