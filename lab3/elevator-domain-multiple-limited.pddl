@@ -40,16 +40,12 @@
   :precondition (and(lift-at ?e ?f)(restriction ?e ?f))
   :effect 
           (when 
-            (and
-              (or
-                (and 
-                  (origin ?p ?f) 
-                  (not (served ?p))
-                )
-                (not (served ?p))
-              )  
-              (person-at ?p ?f)
-            )          
+            
+            (and 
+             (person-at ?p ?f)
+             (not (served ?p))
+            )
+                         
             (and
               (boarded ?p ?e)
               (not(person-at ?p ?f))
@@ -62,20 +58,17 @@
   :parameters (?e - elevator ?f - floor ?p - passenger)
   :precondition (and(lift-at ?e ?f)(restriction ?e ?f))
   :effect(and 
-          (when
-            (and 
-              (or
-                (and 
-                 (boarded ?p ?e) 
-                 (destin ?p ?f)
-                )
-                (boarded ?p ?e) 
-              )
+          (when 
+            (or
               (and 
-                (not (boarded ?p ?e)) 
-                (person-at ?p ?f)              
+                (boarded ?p ?e) 
+                (destin ?p ?f)
               )
-              (person-at ?p ?f)
+              (boarded ?p ?e) 
+            )
+            (and 
+              (not (boarded ?p ?e)) 
+              (person-at ?p ?f)              
             )
           )
           (when
