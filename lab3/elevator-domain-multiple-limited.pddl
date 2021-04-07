@@ -29,27 +29,66 @@
 
 (lift-at ?elevator - elevator ?floor - floor)
 ;; current position of the lift is at ?floor
+
+(person-at ?person - passenger ?floor - floor)
 )
 
 
-;;stop
-
-(:action stop
-  :parameters (?e - elevator ?f - floor)
+;;enter
+(:action enter
+  :parameters (?e - elevator ?f - floor ?p - passenger)
   :precondition (and(lift-at ?e ?f)(restriction ?e ?f))
-  :effect (and 
-               (forall (?p - passenger)         ;;leaving
-                  (when (and (boarded ?p ?e) 
-                             (destin ?p ?f))
-                        (and (not (boarded ?p ?e)) 
-                             (served  ?p))))
-               (forall (?p - passenger)                ;;boarding
-                   (when (and (origin ?p ?f) (not (served ?p)))
-                              (boarded ?p ?e)))))
+  :effect 
+          (when 
+            (and
+              (or
+                (and 
+                  (origin ?p ?f) 
+                  (not (served ?p))
+                )
+                (not (served ?p))
+              )  
+              (person-at ?p ?f)
+            )          
+            (and
+              (boarded ?p ?e)
+              (not(person-at ?p ?f))
+            )
+          )
+)
 
+;;leave
+(:action leave
+  :parameters (?e - elevator ?f - floor ?p - passenger)
+  :precondition (and(lift-at ?e ?f)(restriction ?e ?f))
+  :effect(and 
+          (when
+            (and 
+              (or
+                (and 
+                 (boarded ?p ?e) 
+                 (destin ?p ?f)
+                )
+                (boarded ?p ?e) 
+              )
+              (and 
+                (not (boarded ?p ?e)) 
+                (person-at ?p ?f)              
+              )
+              (person-at ?p ?f)
+            )
+          )
+          (when
+            (and
+              (person-at ?p ?f)
+              (destin ?p ?f)
+            )
+            (served  ?p)
+          )
+  )
+)
 
 ;;drive up
-
 
 (:action up
   :parameters (?e - elevator ?f1 - floor ?f2 - floor)
