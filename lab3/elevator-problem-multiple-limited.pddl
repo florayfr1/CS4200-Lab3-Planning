@@ -65,23 +65,28 @@
 
 (origin p0 f2)
 (destin p0 f7)
+(person-at p0 f2)
 
 (origin p1 f6)
 (destin p1 f0)
+(person-at p1 f6)
 
 (origin p2 f3)
 (destin p2 f7)
+(person-at p2 f3)
 
 (origin p3 f7)
 (destin p3 f6)
+(person-at p3 f7)
 
 (origin p4 f4)
 (destin p4 f1)
+(person-at p4 f4)
 
 
 (lift-at e0 f0)
 (lift-at e1 f3)
-(lift-at e2 f7)
+(lift-at e2 f6)
 
 )
 

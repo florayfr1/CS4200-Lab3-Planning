@@ -37,15 +37,16 @@
 ;;enter
 (:action enter
   :parameters (?e - elevator ?f - floor ?p - passenger)
-  :precondition (and(lift-at ?e ?f)(restriction ?e ?f))
+  :precondition (and (person-at ?p ?f)(and(lift-at ?e ?f)(restriction ?e ?f)))
   :effect 
           (when 
-            
-            (and 
-             (person-at ?p ?f)
-             (not (served ?p))
-            )
-                         
+            (or
+              (and 
+                (origin ?p ?f) 
+                (not (served ?p))
+              )
+              (not (served ?p))
+            )            
             (and
               (boarded ?p ?e)
               (not(person-at ?p ?f))
