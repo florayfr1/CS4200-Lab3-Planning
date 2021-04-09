@@ -57,24 +57,24 @@
 ;;leave
 (:action leave
   :parameters (?e - elevator ?f - floor ?p - passenger)
-  :precondition (and(lift-at ?e ?f)(restriction ?e ?f))
+  :precondition (and(and(lift-at ?e ?f)(restriction ?e ?f)))
   :effect(and 
           (when 
-            (or
-              (and 
-                (boarded ?p ?e) 
-                (destin ?p ?f)
-              )
+            
+            (and 
               (boarded ?p ?e) 
+              (not(destin ?p ?f))
             )
+              
             (and 
               (not (boarded ?p ?e)) 
               (person-at ?p ?f)              
             )
           )
+          
           (when
             (and
-              (person-at ?p ?f)
+              (boarded ?p ?e) 
               (destin ?p ?f)
             )
             (served  ?p)
